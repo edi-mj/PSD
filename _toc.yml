@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: content/profile
+chapters:
+  - file: content/business-understanding
+  - file: content/data-understanding
+    sections:
+      - file: content/explorasi-data
