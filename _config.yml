@@ -3,7 +3,7 @@
 
 title: Proyek Data Sains
 author: Muhammad Junaidi
-logo: content/pp.png
+logo: content/img/pp.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html

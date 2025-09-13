@@ -4,7 +4,7 @@
 format: jb-book
 root: content/profile
 chapters:
-  - file: content/business-understanding
+  # - file: content/business-understanding
   - file: content/data-understanding
     sections:
       - file: content/explorasi-data
