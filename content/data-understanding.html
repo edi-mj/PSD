@@ -356,7 +356,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -372,6 +374,23 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-data-awal">Pengumpulan Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data"><strong>Eksplorasi Data</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-data"><strong>Import Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-data"><strong>Min Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-data"><strong>Max Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-data"><strong>Average Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-jumlah-data"><strong>Visualisasi Jumlah Data</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -383,6 +402,85 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
 <h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
+<p>Dalam framework <code class="docutils literal notranslate"><span class="pre">CRISP-DM</span></code> (Cross-Industry Standard Process for Data Mining), tahap <strong>Data Understanding</strong> adalah langkah awal setelah perumusan masalah bisnis (Business Understanding). Fokus utamanya adalah mengenali, mengumpulkan, dan memahami data yang tersedia agar sesuai dengan tujuan analisis.</p>
+<p>Kegiatannya mencakup:</p>
+<ol class="arabic simple">
+<li><p><strong>Pengumpulan data awal</strong> dari berbagai sumber.</p></li>
+<li><p><strong>Deskripsi data</strong>, misalnya ukuran, format, dan atribut.</p></li>
+<li><p><strong>Eksplorasi data</strong>, seperti distribusi nilai, pola, dan hubungan antar-variabel.</p></li>
+<li><p><strong>Verifikasi kualitas data</strong>, termasuk mendeteksi data hilang, duplikasi, atau anomali.</p></li>
+</ol>
+<section id="pengumpulan-data-awal">
+<h2>Pengumpulan Data Awal<a class="headerlink" href="#pengumpulan-data-awal" title="Link to this heading">#</a></h2>
+<p>Sebagai pembelajaran, dataset yang akan digunakan adalah <a class="reference external" href="https://www.kaggle.com/datasets/arshid/iris-flower-dataset?select=IRIS.csv"><strong>Iris Flower Dataset</strong></a> yang bersumber dari website kaggle.</p>
+</section>
+<section id="deskripsi-data">
+<h2>Deskripsi Data<a class="headerlink" href="#deskripsi-data" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan terdiri dari 4 feature bertipe numerik dan target bertipe categorikal dengan 3 class. Dataset ini berisi 150 baris data atau instance. Berikut detail kolom pada dataset:</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Feature</span></code>:</strong>
+<strong>sepal length, sepal width, petal length, petal width</strong></p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Label/Target</span></code>:</strong>
+<strong>iris</strong> (Iris-setosa, Iris-versicolor, Iris-virginica)</p>
+</section>
+<section id="eksplorasi-data">
+<h2><strong>Eksplorasi Data</strong><a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<p>Eksplorasi data pada bahasan ini akan mencakup pencarian <code class="docutils literal notranslate"><span class="pre">min</span> <span class="pre">max</span></code>, <code class="docutils literal notranslate"><span class="pre">rata-rata</span></code> dari setiap kolom, dan visualisasi jumlah setiap kelas menggunakan grafik batang.</p>
+<p>Eksplorasi data akan dilakukan menggunakan bantuan software <code class="docutils literal notranslate"><span class="pre">Power</span> <span class="pre">BI</span></code>. Namun import data tidak akan langsung menggunakan file excel atau csv melainkan menggunakan sql database. Database Management System (DBMS) yang akan digunakan adalah postgresql dan mysql. Berikut adalah langkah-langkap eksplorasi data menggunakan Power BI:</p>
+<section id="import-data">
+<h3><strong>Import Data</strong><a class="headerlink" href="#import-data" title="Link to this heading">#</a></h3>
+<p><strong>1.</strong> Import data CSV <strong>Iris Flower Dataset</strong> yang telah didapat dari kaggle ke dalam MySQL dan PostgreSQL.</p>
+<p><strong>2. Koneksikan Database dengan Power BI</strong>. Buka Power BI dan klik <strong>“get data from another source”</strong> seperti gambar di bawah.
+<img alt="Power BI import" src="../_images/get-data.png" /></p>
+<p><strong>3.</strong> Pilih Menu <code class="docutils literal notranslate"><span class="pre">Database</span></code> kemudian pilih <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">database</span></code> atau <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span> <span class="pre">database</span></code>. Di sini saya akan mencontohkan menggunakan PostgreSQL. Kemudian klik connect.</p>
+<p><strong>4.</strong> Masukkan informasi server diikuti port dan database tempat menyimpan dataset, kemudian klik OK. Sebagai contoh perhatikan gambar berikut:
+<img alt="alt text" src="../_images/postgre-db.png" /></p>
+<p><strong>5.</strong> Pilih tabel dataset yang telah diimport. Kemudian klik load seperti gambar berikut:
+<img alt="alt text" src="../_images/table-db.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="min-data">
+<h3><strong>Min Data</strong><a class="headerlink" href="#min-data" title="Link to this heading">#</a></h3>
+<p>Setelah dilakukan visualisasi data minimum untuk setiap feature, didapatkanlah hasil seperti pada gambar di bawah ini.
+<img alt="min data" src="../_images/min.png" />
+Berdasarkan gambar tersebut, berikut adalah nilai minimum untuk setiap feature:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Length</span></code>: 1.00</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Width</span></code>: 0.10</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Length</span></code>: 4.30</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Width</span></code>: 2.00</strong></p></li>
+</ul>
+</section>
+<section id="max-data">
+<h3><strong>Max Data</strong><a class="headerlink" href="#max-data" title="Link to this heading">#</a></h3>
+<p>Untuk data maximum, didapatkan hasil seperti pada gambar di bawah ini.
+<img alt="max data" src="../_images/max.png" />
+Berdasarkan gambar tersebut, berikut adalah nilai maximum untuk setiap feature:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Length</span></code>: 6.90</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Width</span></code>: 2.50</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Length</span></code>: 7.90</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Width</span></code>: 4.40</strong></p></li>
+</ul>
+</section>
+<section id="average-data">
+<h3><strong>Average Data</strong><a class="headerlink" href="#average-data" title="Link to this heading">#</a></h3>
+<p>Hasil data rata-rata untuk setiap feature didapat seperti gambar berikut.
+<img alt="avg data" src="../_images/avg.png" />
+Berdasarkan gambar tersebut, berikut adalah nilai rata-rata untuk setiap feature:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Length</span></code>: 3.76</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Petal</span> <span class="pre">Width</span></code>: 1.20</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Length</span></code>: 5.84</strong></p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Sepal</span> <span class="pre">Width</span></code>: 3.05</strong></p></li>
+</ul>
+</section>
+<section id="visualisasi-jumlah-data">
+<h3><strong>Visualisasi Jumlah Data</strong><a class="headerlink" href="#visualisasi-jumlah-data" title="Link to this heading">#</a></h3>
+<p>Berikut adalah grafik jumlah setiap class iris dalam dataset.
+<img alt="count data" src="../_images/count.png" />
+Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu berjumlah 50 atau bisa dibilang distribusi datanya merata.</p>
+</section>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -441,6 +539,30 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pengumpulan-data-awal">Pengumpulan Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-data">Deskripsi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data"><strong>Eksplorasi Data</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-data"><strong>Import Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-data"><strong>Min Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-data"><strong>Max Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-data"><strong>Average Data</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-jumlah-data"><strong>Visualisasi Jumlah Data</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
