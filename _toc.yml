@@ -6,5 +6,6 @@ root: content/profile
 chapters:
   # - file: content/business-understanding
   - file: content/data-understanding
+  - file: content/pre-processing
     # sections:
     #   - file: content/explorasi-data
