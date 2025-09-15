@@ -84,3 +84,37 @@ Berdasarkan gambar tersebut, berikut adalah nilai rata-rata untuk setiap feature
 Berikut adalah grafik jumlah setiap class iris dalam dataset.
 ![count data](img/data-understanding/count.png 'Optional Title Text')
 Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu berjumlah 50 atau bisa dibilang distribusi datanya merata.
+
+### **Deteksi outliers**
+
+Deteksi outliers pada dataset akan menggunakan bantuan metod `ABOD`, `KNN`, `LOF` menggunakan library python `pycaret`. Berikut kode python yang digunakan untuk menggunakan model-model dalam pycaret untuk deteksi anomali sebagai contoh menggunakan model `ABOD`:
+
+```
+import pandas as pd
+from pycaret.anomaly import *
+
+model = 'abod'
+
+data = dataset.copy()
+abod_data = setup(data, session_id=123)
+abod = create_model(model)
+abod_predictions = assign_model(abod)
+
+data_anomaly = abod_predictions[abod_predictions['Anomaly'] == 1]
+data_anomaly
+```
+
+#### **Deteksi Outliers menggunakan ABOD**
+
+Dari hasil deteksi anomali/outliers menggunakan `ABOD` didapat hasil data anomali sebagai berikut:
+![count data](img/data-understanding/abod-anomaly.png 'Optional Title Text')
+
+#### **Deteksi Outliers menggunakan KNN**
+
+Berikut adalah hasil data outliers menggunakan metod `KNN`:
+![count data](img/data-understanding/knn.png 'Optional Title Text')
+
+#### **Deteksi Outliers menggunakan KNN**
+
+Berikut adalah hasil data outliers menggunakan metod `LOF`:
+![count data](img/data-understanding/lof.png 'Optional Title Text')
