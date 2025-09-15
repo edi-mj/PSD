@@ -1,4 +1,6 @@
-Berdasarkan eksplorasi data yang sudah dilakukan menggunakan 3 model deteksi anomaly berbeda yaitu `abod`, `knn`, dan `lof`. Masing-masing model memprediksi 8 buah data anomali. Pada tahap pre-processing, data tersebut perlu dibersihkan dari dataset agar hasil prediksi model nantinya bisa lebih akurat. Untuk menghilangkan data anomaly, kita perlu memfilter data anomaly tersebut sebagai pengecualian untuk digunakan sebagai dataset. Berikut adalah script python yang digunakan untuk memfilter data anomaly:
+# Pre-Processing
+
+erdasarkan eksplorasi data yang sudah dilakukan menggunakan 3 model deteksi anomaly berbeda yaitu `abod`, `knn`, dan `lof`. Masing-masing model memprediksi 8 buah data anomali. Pada tahap pre-processing, data tersebut perlu dibersihkan dari dataset agar hasil prediksi model nantinya bisa lebih akurat. Untuk menghilangkan data anomaly, kita perlu memfilter data anomaly tersebut sebagai pengecualian untuk digunakan sebagai dataset. Berikut adalah script python yang digunakan untuk memfilter data anomaly:
 
 ```
 import pandas as pd
