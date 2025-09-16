@@ -34,22 +34,22 @@ Eksplorasi data akan dilakukan menggunakan bantuan software `Power BI`. Namun im
 **1.** Import data CSV **Iris Flower Dataset** yang telah didapat dari kaggle ke dalam MySQL dan PostgreSQL.
 
 **2. Koneksikan Database dengan Power BI**. Buka Power BI dan klik **"get data from another source"** seperti gambar di bawah.
-![Power BI import](img/data-understanding/get-data.png 'Optional Title Text')
+![Power BI import](img/data-understanding/get-data.png "Optional Title Text")
 
 **3.** Pilih Menu `Database` kemudian pilih `MySQL database` atau `PostgreSQL database`. Di sini saya akan mencontohkan menggunakan PostgreSQL. Kemudian klik connect.
 
 **4.** Masukkan informasi server diikuti port dan database tempat menyimpan dataset, kemudian klik OK. Sebagai contoh perhatikan gambar berikut:
-![alt text](img/data-understanding/postgre-db.png 'Optional Title Text')
+![alt text](img/data-understanding/postgre-db.png "Optional Title Text")
 
 **5.** Pilih tabel dataset yang telah diimport. Kemudian klik load seperti gambar berikut:
-![alt text](img/data-understanding/table-db.png 'Optional Title Text')
+![alt text](img/data-understanding/table-db.png "Optional Title Text")
 
 ---
 
 ### **Min Data**
 
 Setelah dilakukan visualisasi data minimum untuk setiap feature, didapatkanlah hasil seperti pada gambar di bawah ini.
-![min data](img/data-understanding/min.png 'Optional Title Text')
+![min data](img/data-understanding/min.png "Optional Title Text")
 Berdasarkan gambar tersebut, berikut adalah nilai minimum untuk setiap feature:
 
 - **`Petal Length`: 1.00**
@@ -60,7 +60,7 @@ Berdasarkan gambar tersebut, berikut adalah nilai minimum untuk setiap feature:
 ### **Max Data**
 
 Untuk data maximum, didapatkan hasil seperti pada gambar di bawah ini.
-![max data](img/data-understanding/max.png 'Optional Title Text')
+![max data](img/data-understanding/max.png "Optional Title Text")
 Berdasarkan gambar tersebut, berikut adalah nilai maximum untuk setiap feature:
 
 - **`Petal Length`: 6.90**
@@ -71,7 +71,7 @@ Berdasarkan gambar tersebut, berikut adalah nilai maximum untuk setiap feature:
 ### **Average Data**
 
 Hasil data rata-rata untuk setiap feature didapat seperti gambar berikut.
-![avg data](img/data-understanding/avg.png 'Optional Title Text')
+![avg data](img/data-understanding/avg.png "Optional Title Text")
 Berdasarkan gambar tersebut, berikut adalah nilai rata-rata untuk setiap feature:
 
 - **`Petal Length`: 3.76**
@@ -82,7 +82,7 @@ Berdasarkan gambar tersebut, berikut adalah nilai rata-rata untuk setiap feature
 ### **Visualisasi Jumlah Data**
 
 Berikut adalah grafik jumlah setiap class iris dalam dataset.
-![count data](img/data-understanding/count.png 'Optional Title Text')
+![count data](img/data-understanding/count.png "Optional Title Text")
 Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu berjumlah 50 atau bisa dibilang distribusi datanya merata.
 
 ### **Deteksi outliers**
@@ -104,17 +104,21 @@ data_anomaly = abod_predictions[abod_predictions['Anomaly'] == 1]
 data_anomaly
 ```
 
-#### **Deteksi Outliers menggunakan ABOD**
+#### **ABOD**
 
 Dari hasil deteksi anomali/outliers menggunakan `ABOD` didapat hasil data anomali sebagai berikut:
-![count data](img/data-understanding/abod-anomaly.png 'Optional Title Text')
+![ABOD](img/data-understanding/abod-anomaly.png "Data Anomali Menggunakan ABOD")
 
-#### **Deteksi Outliers menggunakan KNN**
+#### **KNN**
 
 Berikut adalah hasil data outliers menggunakan metod `KNN`:
-![count data](img/data-understanding/knn.png 'Optional Title Text')
+![KNN](img/data-understanding/knn.png "Data Anomali Menggunakan KNN")
+")
 
-#### **Deteksi Outliers menggunakan KNN**
+#### **LOF**
 
 Berikut adalah hasil data outliers menggunakan metod `LOF`:
-![count data](img/data-understanding/lof.png 'Optional Title Text')
+![LOF](img/data-understanding/lof.jpeg "Data Anomali Menggunakan LOF")
+")
+
+Dapat dilihat dari ketiga hasil deteksi anomaly menggunakan 3 model yang berbeda. Ketiga model mendeteksi beberapa data yang sama sebagai data anomali. Namun ada juga data berbeda antar model satu dengan yang lain yang dianggap sebagai data anomali. Hal ini menunjukkan perbedaan cara model satu dengan yang lain dalam mendeteksi anomaly.
