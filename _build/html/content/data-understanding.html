@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Pre-Processing" href="pre-processing.html" />
-    <link rel="prev" title="Profile" href="profile.html" />
+    <link rel="prev" title="Intro" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -142,7 +142,7 @@
     
   
 
-<a class="navbar-brand logo" href="profile.html">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -174,8 +174,8 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="profile.html">
-                    Profile
+                <a class="reference internal" href="intro.html">
+                    Intro
                 </a>
             </li>
         </ul>
@@ -386,9 +386,9 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-data"><strong>Average Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-jumlah-data"><strong>Visualisasi Jumlah Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers"><strong>Deteksi outliers</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers-menggunakan-abod"><strong>Deteksi Outliers menggunakan ABOD</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers-menggunakan-knn"><strong>Deteksi Outliers menggunakan KNN</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Deteksi Outliers menggunakan KNN</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abod"><strong>ABOD</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#knn"><strong>KNN</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lof"><strong>LOF</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -501,20 +501,23 @@ Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu be
 <span class="n">data_anomaly</span>
 </pre></div>
 </div>
-<section id="deteksi-outliers-menggunakan-abod">
-<h4><strong>Deteksi Outliers menggunakan ABOD</strong><a class="headerlink" href="#deteksi-outliers-menggunakan-abod" title="Link to this heading">#</a></h4>
+<section id="abod">
+<h4><strong>ABOD</strong><a class="headerlink" href="#abod" title="Link to this heading">#</a></h4>
 <p>Dari hasil deteksi anomali/outliers menggunakan <code class="docutils literal notranslate"><span class="pre">ABOD</span></code> didapat hasil data anomali sebagai berikut:
-<img alt="count data" src="../_images/abod-anomaly.png" /></p>
+<img alt="ABOD" src="../_images/abod-anomaly.png" /></p>
 </section>
-<section id="deteksi-outliers-menggunakan-knn">
-<h4><strong>Deteksi Outliers menggunakan KNN</strong><a class="headerlink" href="#deteksi-outliers-menggunakan-knn" title="Link to this heading">#</a></h4>
+<section id="knn">
+<h4><strong>KNN</strong><a class="headerlink" href="#knn" title="Link to this heading">#</a></h4>
 <p>Berikut adalah hasil data outliers menggunakan metod <code class="docutils literal notranslate"><span class="pre">KNN</span></code>:
-<img alt="count data" src="../_images/knn.png" /></p>
+<img alt="KNN" src="../_images/knn.png" />
+“)</p>
 </section>
-<section id="id1">
-<h4><strong>Deteksi Outliers menggunakan KNN</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<section id="lof">
+<h4><strong>LOF</strong><a class="headerlink" href="#lof" title="Link to this heading">#</a></h4>
 <p>Berikut adalah hasil data outliers menggunakan metod <code class="docutils literal notranslate"><span class="pre">LOF</span></code>:
-<img alt="count data" src="../_images/lof.png" /></p>
+<img alt="LOF" src="../_images/lof.jpeg" />
+“)</p>
+<p>Dapat dilihat dari ketiga hasil deteksi anomaly menggunakan 3 model yang berbeda. Ketiga model mendeteksi beberapa data yang sama sebagai data anomali. Namun ada juga data berbeda antar model satu dengan yang lain yang dianggap sebagai data anomali. Hal ini menunjukkan perbedaan cara model satu dengan yang lain dalam mendeteksi anomaly.</p>
 </section>
 </section>
 </section>
@@ -551,12 +554,12 @@ Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu be
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="profile.html"
+       href="intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Profile</p>
+        <p class="prev-next-title">Intro</p>
       </div>
     </a>
     <a class="right-next"
@@ -593,9 +596,9 @@ Dari gambar tersebut, bisa dilihat bahwa jumlah setiap kelas sama rata, yaitu be
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-data"><strong>Average Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-jumlah-data"><strong>Visualisasi Jumlah Data</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers"><strong>Deteksi outliers</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers-menggunakan-abod"><strong>Deteksi Outliers menggunakan ABOD</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers-menggunakan-knn"><strong>Deteksi Outliers menggunakan KNN</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Deteksi Outliers menggunakan KNN</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abod"><strong>ABOD</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#knn"><strong>KNN</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lof"><strong>LOF</strong></a></li>
 </ul>
 </li>
 </ul>

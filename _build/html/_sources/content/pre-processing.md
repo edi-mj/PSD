@@ -20,5 +20,5 @@ normal_data = abod_predictions[abod_predictions['Anomaly'] == 0]
 normal_data
 ```
 
-varibel `normal_data` digunakan untuk menyimpan data yang sudah bersih dari. Berikut adalah dataset baru yang sudah dibersihkan dari data anomaly:
-![count data](img/pre-processing/no-anomaly.jpeg "Optional Title Text")
+Varibel `normal_data` digunakan untuk menyimpan data yang sudah bersih dari. Berikut adalah dataset baru yang sudah dibersihkan dari data anomaly:
+![clean data](img/pre-processing/no-anomaly.jpeg "Optional Title Text")
