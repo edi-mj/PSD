@@ -9,3 +9,4 @@ root: content/intro.md
 chapters:
   - file: content/data-understanding
   - file: content/pre-processing
+  - file: content/data-balencing
