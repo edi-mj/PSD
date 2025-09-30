@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Balencing Data &#8212; Proyek Data Sains</title>
+    <title>Balancing Data &#8212; Proyek Data Sains</title>
   
   
   
@@ -57,9 +57,10 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'content/data-balencing';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/data-balancing';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Klasifikasi" href="classification.html" />
     <link rel="prev" title="Pre-Processing" href="pre-processing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -180,9 +181,11 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pre-processing.html">Pre-Processing</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Balencing Data</a></li>
-
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pre-processing.html">Pre-Processing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Balancing Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Klasifikasi</a></li>
 </ul>
 
     </div>
@@ -254,7 +257,7 @@
       
       
       
-      <li><a href="https://github.com/edi-mj/PSD/issues/new?title=Issue%20on%20page%20%2Fcontent/data-balencing.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/edi-mj/PSD/issues/new?title=Issue%20on%20page%20%2Fcontent/data-balancing.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +287,7 @@
       
       
       
-      <li><a href="../_sources/content/data-balencing.ipynb" target="_blank"
+      <li><a href="../_sources/content/data-balancing.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -368,7 +371,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Balencing Data</h1>
+    <h1>Balancing Data</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -378,7 +381,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Balencing Data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-pendukung">Import Library Pendukung</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-mysql-dan-ambil-data">Koneksi MySQL dan Ambil Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-sampling-menggunakan-adasyn">Over Sampling Menggunakan ADASYN</a><ul class="nav section-nav flex-column">
@@ -392,22 +394,6 @@ document.write(`
 </ul>
 </li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi">Klasifikasi</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-train-dan-evaluasi-model">Function Train dan Evaluasi Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes">Klasifikasi Naive Bayes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-random-forest">Klasifikasi Random Forest</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-ensemble-bagging">Klasifikasi Ensemble Bagging</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-base-model-naive-bayes">Menggunakan base model Naive Bayes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-base-model-random-forest">Menggunakan base model Random Forest</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-akurasi-klasifikasi">Perbandingan Akurasi Klasifikasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
-</ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -418,8 +404,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="balencing-data">
-<h1>Balencing Data<a class="headerlink" href="#balencing-data" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="balancing-data">
+<h1>Balancing Data<a class="headerlink" href="#balancing-data" title="Link to this heading">#</a></h1>
 <p>Dataset yang tidak seimbang dapat menimbulkan bias pada model machine learning, di mana model lebih condong mengenali kelas mayoritas dan mengabaikan kelas minoritas. Untuk mengatasi hal ini, digunakan metode ADASYN (Adaptive Synthetic Sampling) yang secara adaptif menghasilkan data sintetis baru pada kelas minoritas, khususnya di area yang sulit dipelajari model.</p>
 <p>Notebook ini bertujuan menunjukkan bagaimana <a class="reference external" href="https://archive.ics.uci.edu/dataset/39/ecoli"><strong>Data ecoli</strong></a> yang awalnya tidak seimbang dapat diseimbangkan dengan ADASYN, serta membandingkan distribusi data sebelum dan sesudah balancing melalui scatter plot. Dengan proses ini, model diharapkan mampu memberikan prediksi yang lebih adil dan akurat pada semua kelas.</p>
 <section id="import-library-pendukung">
@@ -715,283 +701,6 @@ Name: count, dtype: int64
 </section>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="klasifikasi">
-<h1>Klasifikasi<a class="headerlink" href="#klasifikasi" title="Link to this heading">#</a></h1>
-<p>Bagian ini digunakan untuk melakukan perbandingan akurasi klasifikasi menggunakan Naive Bayes dan Random forest pada dataset original (unbalanced), dataset setelah ADASYN, dan dataset setelah SMOTE.</p>
-<section id="function-train-dan-evaluasi-model">
-<h2>Function Train dan Evaluasi Model<a class="headerlink" href="#function-train-dan-evaluasi-model" title="Link to this heading">#</a></h2>
-<p>Fungsi ini akan digunakan untuk training, testing, hingga mengukur akurasi model</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Fungsi untuk membagi data, melatih model, dan mengevaluasi akurasinya.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-        <span class="n">X_data</span><span class="p">,</span> <span class="n">y_data</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_data</span>
-    <span class="p">)</span>
-
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-
-    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">accuracy</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="klasifikasi-naive-bayes">
-<h2>Klasifikasi Naive Bayes<a class="headerlink" href="#klasifikasi-naive-bayes" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
-
-<span class="c1"># Inisialisasi Model</span>
-<span class="n">naive_bayes_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
-
-<span class="c1"># Evaluasi pada Setiap Dataset</span>
-<span class="n">accuracy_original</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">naive_bayes_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">accuracy_adasyn</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">naive_bayes_model</span><span class="p">,</span> <span class="n">X_res_adasyn</span><span class="p">,</span> <span class="n">y_res_adasyn</span><span class="p">)</span>
-<span class="n">accuracy_smote</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">naive_bayes_model</span><span class="p">,</span> <span class="n">X_res_smote</span><span class="p">,</span> <span class="n">y_res_smote</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Perbandingan Akurasi Klasifikasi Naive Bayes ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Perbandingan Akurasi Klasifikasi Naive Bayes ---
-Akurasi pada Data Original (Imbalanced): 0.7941
-Akurasi pada Data setelah ADASYN:       0.8000
-Akurasi pada Data setelah SMOTE:        0.8428
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="klasifikasi-random-forest">
-<h2>Klasifikasi Random Forest<a class="headerlink" href="#klasifikasi-random-forest" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-
-<span class="c1"># Inisialisasi Model Random Forest</span>
-<span class="n">random_forest_model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># Evaluasi pada Setiap Dataset</span>
-<span class="n">accuracy_original_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">random_forest_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">accuracy_adasyn_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">random_forest_model</span><span class="p">,</span> <span class="n">X_res_adasyn</span><span class="p">,</span> <span class="n">y_res_adasyn</span><span class="p">)</span>
-<span class="n">accuracy_smote_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">random_forest_model</span><span class="p">,</span> <span class="n">X_res_smote</span><span class="p">,</span> <span class="n">y_res_smote</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Perbandingan Akurasi Klasifikasi Random Forest ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Perbandingan Akurasi Klasifikasi Random Forest ---
-Akurasi pada Data Original (Imbalanced): 0.8676
-Akurasi pada Data setelah ADASYN:       0.9391
-Akurasi pada Data setelah SMOTE:        0.9520
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="klasifikasi-ensemble-bagging">
-<h2>Klasifikasi Ensemble Bagging<a class="headerlink" href="#klasifikasi-ensemble-bagging" title="Link to this heading">#</a></h2>
-<p>Bagian ini akan digunakan untuk menerapkan Ensemble Bagging menggunakan base model Naive Bayes dan Random Forest.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaggingClassifier</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="menggunakan-base-model-naive-bayes">
-<h3>Menggunakan base model Naive Bayes<a class="headerlink" href="#menggunakan-base-model-naive-bayes" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Base model</span>
-<span class="n">naive_bayes_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
-
-<span class="c1"># Inisialisasi Model Bagging Classifier</span>
-<span class="n">bagging_model</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">naive_bayes_model</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># Evaluasi pada Setiap Dataset</span>
-<span class="n">accuracy_original_bagging_nb</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">accuracy_adasyn_bagging_nb</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X_res_adasyn</span><span class="p">,</span> <span class="n">y_res_adasyn</span><span class="p">)</span>
-<span class="n">accuracy_smote_bagging_nb</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X_res_smote</span><span class="p">,</span> <span class="n">y_res_smote</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Perbandingan Akurasi Klasifikasi Bagging Classifier ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Perbandingan Akurasi Klasifikasi Bagging Classifier ---
-Akurasi pada Data Original (Imbalanced): 0.8971
-Akurasi pada Data setelah ADASYN:       0.8000
-Akurasi pada Data setelah SMOTE:        0.8472
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="menggunakan-base-model-random-forest">
-<h3>Menggunakan base model Random Forest<a class="headerlink" href="#menggunakan-base-model-random-forest" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Base model</span>
-<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># Inisialisasi Model Bagging Classifier</span>
-<span class="n">bagging_model</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">random_forest</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># Evaluasi pada Setiap Dataset</span>
-<span class="n">accuracy_original_bagging_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">accuracy_adasyn_bagging_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X_res_adasyn</span><span class="p">,</span> <span class="n">y_res_adasyn</span><span class="p">)</span>
-<span class="n">accuracy_smote_bagging_rf</span> <span class="o">=</span> <span class="n">latih_dan_evaluasi_model</span><span class="p">(</span><span class="n">bagging_model</span><span class="p">,</span> <span class="n">X_res_smote</span><span class="p">,</span> <span class="n">y_res_smote</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Perbandingan Akurasi Klasifikasi Bagging Classifier ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Perbandingan Akurasi Klasifikasi Bagging Classifier ---
-Akurasi pada Data Original (Imbalanced): 0.8971
-Akurasi pada Data setelah ADASYN:       0.9348
-Akurasi pada Data setelah SMOTE:        0.9563
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="perbandingan-akurasi-klasifikasi">
-<h2>Perbandingan Akurasi Klasifikasi<a class="headerlink" href="#perbandingan-akurasi-klasifikasi" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Model&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Naive Bayes&#39;</span><span class="p">,</span> <span class="s1">&#39;Naive Bayes&#39;</span><span class="p">,</span> <span class="s1">&#39;Naive Bayes&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;Bagging (NB)&#39;</span><span class="p">,</span> <span class="s1">&#39;Bagging (NB)&#39;</span><span class="p">,</span> <span class="s1">&#39;Bagging (NB)&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;Bagging (RF)&#39;</span><span class="p">,</span> <span class="s1">&#39;Bagging (RF)&#39;</span><span class="p">,</span> <span class="s1">&#39;Bagging (RF)&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;Dataset&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">],</span>
-    <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">accuracy_original</span><span class="p">,</span> <span class="n">accuracy_adasyn</span><span class="p">,</span> <span class="n">accuracy_smote</span><span class="p">,</span>
-                 <span class="n">accuracy_original_rf</span><span class="p">,</span> <span class="n">accuracy_adasyn_rf</span><span class="p">,</span> <span class="n">accuracy_smote_rf</span><span class="p">,</span>
-                 <span class="n">accuracy_original_bagging_nb</span><span class="p">,</span> <span class="n">accuracy_adasyn_bagging_nb</span><span class="p">,</span> <span class="n">accuracy_smote_bagging_nb</span><span class="p">,</span>
-                 <span class="n">accuracy_original_bagging_rf</span><span class="p">,</span> <span class="n">accuracy_adasyn_bagging_rf</span><span class="p">,</span> <span class="n">accuracy_smote_bagging_rf</span><span class="p">]</span> <span class="c1"># Assuming the last bagging results are for RF base</span>
-<span class="p">}</span>
-
-<span class="n">df_accuracy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Model&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Dataset&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_accuracy</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Perbandingan Akurasi Model pada Dataset Original, ADASYN, dan SMOTE&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Akurasi&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Dataset&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/4bc72825e80765a8f4c30b7dafd31a47b9817b22784b6907e392fac792877cd1.png" src="../_images/4bc72825e80765a8f4c30b7dafd31a47b9817b22784b6907e392fac792877cd1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Perbandingan Akurasi Klasifikasi Naive Bayes ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Perbandingan Akurasi Klasifikasi Random Forest ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Perbandingan Akurasi Klasifikasi Bagging Classifier (Naive Bayes) ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_bagging_nb</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-
-<span class="c1"># Tampilkan Hasil Perbandingan Akurasi</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Perbandingan Akurasi Klasifikasi Bagging Classifier (Random Forest) ---&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data Original (Imbalanced): </span><span class="si">{</span><span class="n">accuracy_original_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah ADASYN:       </span><span class="si">{</span><span class="n">accuracy_adasyn_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi pada Data setelah SMOTE:        </span><span class="si">{</span><span class="n">accuracy_smote_bagging_rf</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Perbandingan Akurasi Klasifikasi Naive Bayes ---
-Akurasi pada Data Original (Imbalanced): 0.7941
-Akurasi pada Data setelah ADASYN:       0.8000
-Akurasi pada Data setelah SMOTE:        0.8428
-
---- Perbandingan Akurasi Klasifikasi Random Forest ---
-Akurasi pada Data Original (Imbalanced): 0.8676
-Akurasi pada Data setelah ADASYN:       0.9391
-Akurasi pada Data setelah SMOTE:        0.9520
-
---- Perbandingan Akurasi Klasifikasi Bagging Classifier (Naive Bayes) ---
-Akurasi pada Data Original (Imbalanced): 0.8971
-Akurasi pada Data setelah ADASYN:       0.8000
-Akurasi pada Data setelah SMOTE:        0.8472
-
---- Perbandingan Akurasi Klasifikasi Bagging Classifier (Random Forest) ---
-Akurasi pada Data Original (Imbalanced): 0.8971
-Akurasi pada Data setelah ADASYN:       0.9348
-Akurasi pada Data setelah SMOTE:        0.9563
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="kesimpulan">
-<h2>Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
-<p>Berdasarkan hasil klasifikasi menggunakan <code class="docutils literal notranslate"><span class="pre">Naive</span> <span class="pre">Bayes</span></code>, <code class="docutils literal notranslate"><span class="pre">Random</span> <span class="pre">Forest</span></code>, dan <code class="docutils literal notranslate"><span class="pre">Bagging</span> <span class="pre">Classifier</span></code> pada dataset <code class="docutils literal notranslate"><span class="pre">Ecoli</span></code> sebelum dan sesudah balancing dengan <code class="docutils literal notranslate"><span class="pre">ADASYN</span></code> dan <code class="docutils literal notranslate"><span class="pre">SMOTE</span></code>, dapat disimpulkan beberapa hal:</p>
-<p><strong>Naive Bayes:</strong>
-Model Naive Bayes menunjukkan peningkatan akurasi setelah data diseimbangkan, terutama dengan SMOTE.</p>
-<p><strong>Random Forest:</strong>
-Random Forest memberikan akurasi yang lebih tinggi dibandingkan Naive Bayes pada semua kondisi. Balancing data dengan ADASYN dan SMOTE secara signifikan meningkatkan performa Random Forest.</p>
-<p><strong>Bagging Classifier (dengan base model Naive Bayes):</strong>
-Bagging dengan Naive Bayes menunjukkan akurasi yang baik pada data original, namun peningkatannya setelah balancing tidak sebesar Random Forest.</p>
-<p><strong>Bagging Classifier (dengan base model Random Forest):</strong>
-Bagging dengan Random Forest sebagai base model juga menunjukkan peningkatan akurasi yang signifikan setelah balancing, mendekati performa Random Forest tanpa bagging.</p>
-<p><strong>Klasifikasi menggunakan dan tanpa Bagging pada Random Forest</strong> menghasilkan nilai akurasi yang sama disebabkan Random Forest sendiri adalah algoritma ensemble yang secara internal menggunakan prinsip bagging.</p>
-<p><strong>Kesimpulan Akhir:</strong>
-Secara umum, balancing data menggunakan ADASYN dan SMOTE berhasil meningkatkan akurasi klasifikasi pada dataset Ecoli yang tidak seimbang. Model Random Forest menunjukkan performa terbaik di antara model yang diuji, baik sebelum maupun sesudah balancing. Penerapan Bagging Classifier dengan Random Forest sebagai base model juga memberikan hasil yang baik, meskipun tidak selalu lebih tinggi dari Random Forest tunggal setelah balancing. SMOTE tampaknya memberikan sedikit keunggulan dalam meningkatkan akurasi dibandingkan ADASYN pada kasus ini.</p>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1032,6 +741,15 @@ Secara umum, balancing data menggunakan ADASYN dan SMOTE berhasil meningkatkan a
         <p class="prev-next-title">Pre-Processing</p>
       </div>
     </a>
+    <a class="right-next"
+       href="classification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Klasifikasi</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1048,7 +766,6 @@ Secara umum, balancing data menggunakan ADASYN dan SMOTE berhasil meningkatkan a
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Balencing Data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library-pendukung">Import Library Pendukung</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-mysql-dan-ambil-data">Koneksi MySQL dan Ambil Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#over-sampling-menggunakan-adasyn">Over Sampling Menggunakan ADASYN</a><ul class="nav section-nav flex-column">
@@ -1062,22 +779,6 @@ Secara umum, balancing data menggunakan ADASYN dan SMOTE berhasil meningkatkan a
 </ul>
 </li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi">Klasifikasi</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-train-dan-evaluasi-model">Function Train dan Evaluasi Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-naive-bayes">Klasifikasi Naive Bayes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-random-forest">Klasifikasi Random Forest</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-ensemble-bagging">Klasifikasi Ensemble Bagging</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-base-model-naive-bayes">Menggunakan base model Naive Bayes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggunakan-base-model-random-forest">Menggunakan base model Random Forest</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-akurasi-klasifikasi">Perbandingan Akurasi Klasifikasi</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
-</ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
