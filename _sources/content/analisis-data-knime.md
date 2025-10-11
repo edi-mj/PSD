@@ -96,7 +96,9 @@ Untuk melakukan analisis missing value sebenarnya KNIME sudah menyediakan Node u
 Buat python environment menggunakan conda dengan cara berikut:
 
 - Buka Anaconda Prompt
-- Masukkan prompt berikut: `conda create -n environment_name python=3.x pandas numpy matplotlib scikit-learn -c knime -c conda-forge` Ganti 'environment_name' dengan nama yang diinginkan dan python version misalnya python=3.10 seperti gambar berikut:
+- Masukkan prompt berikut:
+  `conda create -n environment_name python=3.x pandas numpy matplotlib scikit-learn -c knime -c conda-forge`
+  Ganti 'environment_name' dengan nama yang diinginkan dan python version misalnya python=3.10 seperti gambar berikut:
   ![Create Python Environment](img/analisis-data-knime/create-python-env.png 'Create Python Environment')
 - Aktifkan environment yang sudah dibuat menggunakan prompt berikut: `conda activate environment_name` Ganti 'environment_name' dengan nama environment yang dibuat
 
