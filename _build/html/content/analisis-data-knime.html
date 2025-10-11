@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analisis &amp; Balancing Data menggunakan KNIME &#8212; Proyek Data Sains</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/analisis-data-knime';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Klasifikasi" href="classification.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pp.png" class="logo__image only-light" alt="Proyek Data Sains - Home"/>
+    <script>document.write(`<img src="../_static/pp.png" class="logo__image only-dark" alt="Proyek Data Sains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Intro
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pre-processing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-balancing.html">Balancing Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Klasifikasi</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analisis &amp; Balancing Data menggunakan KNIME</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/edi-mj/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/edi-mj/PSD/issues/new?title=Issue%20on%20page%20%2Fcontent/analisis-data-knime.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/analisis-data-knime.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis & Balancing Data menggunakan KNIME</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prasyarat">Prasyarat</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-prasyarat">Install prasyarat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-knime">Install KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-workspace-di-knime">Membuat Workspace di KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-dataset">Get Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-database">Koneksi Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pilih-table-database">Pilih Table Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baca-data-table">Baca Data Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-missing-value">Analisis Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-python-environment">Setup Python Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-extension">Install Python Extension</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-python">Script Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualiasi-analisa-missing-value">Visualiasi Analisa Missing Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers">Deteksi Outliers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#balacing-data-menggunakan-smote">Balacing data menggunakan SMOTE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sebelum-balancing">Visualisasi Sebelum Balancing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-setelah-balancing">Visualisasi Setelah Balancing</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-balancing-data-menggunakan-knime">
+<h1>Analisis &amp; Balancing Data menggunakan KNIME<a class="headerlink" href="#analisis-balancing-data-menggunakan-knime" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">KNIME</span> <span class="pre">(Konstanz</span> <span class="pre">Information</span> <span class="pre">Miner)</span></code> adalah software data science gratis dan open source yang menggunakan interface visual berbasis <em>workflow</em> untuk integrasi, analisis, dan visualisasi data.</p>
+<p>Notebook ini akan menjelaskan langkah-langkah untuk analisis data khususnya melihat missing value dan deteksi outliers/anomaly pada datasets serta menyeimbangkan data menggunakan <strong>SMOTE</strong>. Dataset yang akan digunakan adalah dataset Ecoli dari UCI Datasets yang dapat diunduh melalui link berikut: <a class="reference external" href="https://archive.ics.uci.edu/dataset/39/ecoli">https://archive.ics.uci.edu/dataset/39/ecoli</a>. Semua tahapan tersebut akan dilakukan menggunakan bantuan software KNIME.</p>
+<section id="prasyarat">
+<h2>Prasyarat<a class="headerlink" href="#prasyarat" title="Link to this heading">#</a></h2>
+<p>Sebelum melakukan Analisis dan Balancing data menggunakan KNIME, berikut beberapa prasyarat yang perlu dipenuhi:</p>
+<ul class="simple">
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">Python</span></code> minimal versi 3.9.x</p></li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">Anaconda/Miniconda</span></code></p></li>
+<li><p>DBMS <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span></code></p></li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">KNIME</span></code></p></li>
+</ul>
+<section id="install-prasyarat">
+<h3>Install prasyarat<a class="headerlink" href="#install-prasyarat" title="Link to this heading">#</a></h3>
+<p>Untuk melakukan instalasi, silakan unduh installer masing-masing tools yang bisa diakses melalui link berikut:</p>
+<ul class="simple">
+<li><p>Python: <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p></li>
+<li><p>Anaconda/Miniconda: <a class="reference external" href="https://www.anaconda.com/download/success">https://www.anaconda.com/download/success</a></p></li>
+<li><p>PostgreSQL: <a class="reference external" href="https://www.postgresql.org/download/">https://www.postgresql.org/download/</a></p></li>
+</ul>
+<p>Ikuti semua langkah instalasi hingga selesai</p>
+</section>
+<section id="install-knime">
+<h3>Install KNIME<a class="headerlink" href="#install-knime" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Unduh installer KNIME melalui website resminya yang dapat diakses melalui link berikut: <a class="reference external" href="https://www.knime.com/downloads">https://www.knime.com/downloads</a>.</p></li>
+<li><p>Ikuti semua langkah instalasi hingga selesai</p></li>
+<li><p>Setelah berhasil, tampilan awal/homepage aplikasi KNIME akan tampak seperti gambar berikut:
+<img alt="Homepage Aplikasi KNIME" src="../_images/homepage-knime.png" /></p></li>
+</ul>
+</section>
+</section>
+<section id="membuat-workspace-di-knime">
+<h2>Membuat Workspace di KNIME<a class="headerlink" href="#membuat-workspace-di-knime" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Klik tombol <code class="docutils literal notranslate"><span class="pre">create</span> <span class="pre">new</span> <span class="pre">workflow</span></code> untuk membuat workflow baru seperti gambar berikut:
+<img alt="Create New Workflow" src="../_images/create-workflow.png" /></p></li>
+<li><p>Beri nama workflow sesuai dengan workflow yang akan dibangun sebagai contoh <strong><em>Analisis and Balancing Data</em></strong></p></li>
+<li><p>Setelah selesai, maka Anda akan diarahkan ke workflow yang sudah dibuat seperti pada gambar berikut: <img alt="Worlflow KNIME" src="../_images/workflow-knime.png" />
+Voila! kita sudah berhasil membuat workflow di KNIME. Selanjutnya kita akan masuk ke bagian paling penting yaitu melakukan tahapan Analisis dan Balancing Data</p></li>
+</ul>
+</section>
+<section id="get-dataset">
+<h2>Get Dataset<a class="headerlink" href="#get-dataset" title="Link to this heading">#</a></h2>
+<p>Langkah pertama yang perlu kita lakukan adalah menarik dataset Ecoli yang sudah kita miliki ke dalam KNIME. Dalam notebook ini kita akan menarik data menggunakan <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span> <span class="pre">Connector</span></code> jadi silakan masukkan terlebih dulu dataset Ecoli ke dalam database PostgreSQL, bisa lokal atau menggunakan layanan cloud seperti <strong>aiven</strong>.</p>
+<section id="koneksi-database">
+<h3>Koneksi Database<a class="headerlink" href="#koneksi-database" title="Link to this heading">#</a></h3>
+<p>Untuk membuat koneksi dengan DBMS PostgreSQL kita bisa menggunakan Nodes <code class="docutils literal notranslate"><span class="pre">PostgreSQL</span> <span class="pre">Connector</span></code>.</p>
+<ul class="simple">
+<li><p>Pada bagian tab Nodes di bagian kiri aplikasi cari <strong>PostgreSQL Connector</strong> pada kolom pencarian</p></li>
+<li><p>Drag and Drop Nodes <strong>PostgreSQL Connector</strong> ke tangah layar seperti gambar berikut: <img alt="PostgreSQL Connector" src="../_images/postgresql-connector.png" /></p></li>
+<li><p>Klik 2x pada Nodes untuk melakukan konfigurasi</p></li>
+<li><p>Masukkan informasi database PostgreSQL yang digunakan seperti <strong>Hostname, Port, Database name, Username dan Password</strong>
+<img alt="Konfigurasi Database" src="../_images/db-configuration.png" /></p></li>
+<li><p>Setelah selesai, klik tombol execute untuk menjalankan Node seperti ditunjukkan gambar berikut:
+<img alt="Execute Node" src="../_images/execute-node.png" /></p></li>
+<li><p>Jika koneksi berhasil akan ditandai dengan indikator berwarna hijau pada Node seperti pada gambar berikut:
+<img alt="Succes excecute Node" src="../_images/succes-execute-node.png" /></p></li>
+</ul>
+</section>
+<section id="pilih-table-database">
+<h3>Pilih Table Database<a class="headerlink" href="#pilih-table-database" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pada Node <strong>PostgreSQL Connector</strong> yang sudah dibuat, tekan dan tarik kotak merah hingga membentuk gari koneksi lalu lepas seperti ditunjukkan pada gambar berikut:
+<img alt="Table Selector Node" src="../_images/table-selector.png" /></p></li>
+<li><p>Pilih Node <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Table</span> <span class="pre">Selector</span></code> sebagai Node tujuan untuk dihubungkan dengan node <strong>PostgreSQL Connector</strong></p></li>
+<li><p>Pilih <strong>schema</strong> dan <strong>table</strong> tempat data Ecoli disimpan seperti gambar berikut:
+<img alt="Select Table" src="../_images/select-table.png" />
+<img alt="Select Table Ecoli" src="../_images/select-table-ecoli.png" /></p></li>
+<li><p>Klik execute dan pastikan indikatornya berwarna hijau</p></li>
+</ul>
+</section>
+<section id="baca-data-table">
+<h3>Baca Data Table<a class="headerlink" href="#baca-data-table" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pada Node <strong>DB Table Selector</strong> yang sudah dibuat, tekan dan tarik kotak merah hingga membentuk garis koneksi lalu lepas seperti yang dilakukan pada langkah sebelumnya.</p></li>
+<li><p>Pilih Node <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code> sebagai Node tujuan untuk dihubungkan dengan node <strong>DB Table Selector</strong></p></li>
+<li><p>Klik execute dan pastikan indikatornya berwarna hijau. Jika berhasil maka akan tampak seperti gambar berikut:
+<img alt="Get Dataset Succes" src="../_images/get-dataset-succes.png" /></p></li>
+</ul>
+<p>Voila! Kita sudah berhasil menarik dataset Ecoli yang disimpan dalam PostgreSQL ke dalam KNIME yang akan digunakan untuk analisis dan balancing pada tahap selanjutnya.</p>
+</section>
+</section>
+<section id="analisis-missing-value">
+<h2>Analisis Missing Value<a class="headerlink" href="#analisis-missing-value" title="Link to this heading">#</a></h2>
+<p>Untuk melakukan analisis missing value sebenarnya KNIME sudah menyediakan Node untuk itu, tapi kita akan mencoba cara yang berbeda yaitu menggunakan Node <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code> untuk menggunakan script python. Sebelum itu, kita perlu install extension <code class="docutils literal notranslate"><span class="pre">KNIME</span> <span class="pre">Python</span> <span class="pre">Integration</span></code> agar bisa menggunakan Node <strong>Script Python (Legacy)</strong>.</p>
+<section id="setup-python-environment">
+<h3>Setup Python Environment<a class="headerlink" href="#setup-python-environment" title="Link to this heading">#</a></h3>
+<section id="install-python-extension">
+<h4>Install Python Extension<a class="headerlink" href="#install-python-extension" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Klik tombol menu yang terletak pada pojok kanan atas aplikasi seperti gambar berikut:
+<img alt="Tombol Menu" src="../_images/knime-menu.png" /></p></li>
+<li><p>Pilih install extensions</p></li>
+<li><p>Masukkan ‘python’ pada kolom pencarian</p></li>
+<li><p>Centang extension <strong>KNIME Python Integration</strong> seperti gambar berikut:
+<img alt="Python Extension" src="../_images/python-extension.png" /></p></li>
+<li><p>Klik next dan tunggu hingga instalasi selesai</p></li>
+</ul>
+</section>
+<section id="konfigurasi">
+<h4>Konfigurasi<a class="headerlink" href="#konfigurasi" title="Link to this heading">#</a></h4>
+<p>Buat python environment menggunakan conda dengan cara berikut:</p>
+<ul class="simple">
+<li><p>Buka Anaconda Prompt</p></li>
+<li><p>Masukkan prompt berikut: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">environment_name</span> <span class="pre">python=3.x</span> <span class="pre">pandas</span> <span class="pre">numpy</span> <span class="pre">matplotlib</span> <span class="pre">scikit-learn</span> <span class="pre">-c</span> <span class="pre">knime</span> <span class="pre">-c</span> <span class="pre">conda-forge</span></code> Ganti ‘environment_name’ dengan nama yang diinginkan dan python version misalnya python=3.10 seperti gambar berikut:
+<img alt="Create Python Environment" src="../_images/create-python-env.png" /></p></li>
+<li><p>Aktifkan environment yang sudah dibuat menggunakan prompt berikut: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">environment_name</span></code> Ganti ‘environment_name’ dengan nama environment yang dibuat</p></li>
+</ul>
+<p>Konfigurasi environment yang sudah dibuat ke dalam KNIME menggunakan cara berikut:</p>
+<ul class="simple">
+<li><p>Klik menu preference pada KNIME seperti gambar berikut:
+<img alt="Preference KNIME" src="../_images/preference-knime.png" /></p></li>
+<li><p>Pilih menu <strong>Conda</strong> dan masukkan path directory tempat instalasi Anaconda/Miniconda seperti pada gambar berikut:
+<img alt="Konfigurasi Conda KNIME" src="../_images/conda-config.png" /></p></li>
+<li><p>Pilih menu Python(Legacy) dan pilih python environment yang sudah dibuat seperti gambar beriut:
+<img alt="Konfigurasi Environment Python di KNIME" src="../_images/config-env-knime.png" /></p></li>
+<li><p>Klik <strong>apply and close</strong></p></li>
+</ul>
+<p>Sekarang kita sudah bisa menggunakan Node Python Script pada KNIME</p>
+</section>
+</section>
+<section id="script-python">
+<h3>Script Python<a class="headerlink" href="#script-python" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Masuk ke tab Node pada bagian sebelah kiri Aplikasi KNIME</p></li>
+<li><p>Masukkan ‘python’ pada kolom pencarian</p></li>
+<li><p>Pilih Node <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Script</span> <span class="pre">(Legacy)</span></code> dan Drag and Drop Node tersebut ke tengah layar
+<img alt="Node Python Script" src="../_images/node-python-script.png" /></p></li>
+<li><p>Hubungkan <strong>Node DB Reader</strong> dengan <strong>Python Script (Legacy)</strong> dengan menarik tombol segitiga hitam pada Node DB Reader ke segitiga hitam bagian belakang node Python Script (Legacy)</p></li>
+<li><p>Klik 2x pada Node <strong>Python Script (Legacy)</strong>
+dan klik tombol ‘Open dialog’. Jika berhasil maka akan muncul dialog seperti pada gambar berikut:
+<img alt="Dialog Python Script" src="../_images/dialog-python-script.png" /></p></li>
+<li><p>Untuk memeriksa Missing Value bisa masukkan script python berikut:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># --- Ambil input dari KNIME ---</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Hitung jumlah missing value per kolom</span>
+<span class="n">missing_per_column</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">missing_per_column</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Column&#39;</span><span class="p">,</span> <span class="s1">&#39;MissingCount&#39;</span><span class="p">]</span>
+
+<span class="c1"># Hitung persentase missing value per kolom</span>
+<span class="n">missing_per_column</span><span class="p">[</span><span class="s1">&#39;MissingPercent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">missing_per_column</span><span class="p">[</span><span class="s1">&#39;MissingCount&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="c1"># Hitung total missing values di dataset</span>
+<span class="n">total_missing</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total missing values: </span><span class="si">{</span><span class="n">total_missing</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_per_column</span><span class="p">)</span>
+
+<span class="n">output_table_1</span> <span class="o">=</span> <span class="n">missing_per_column</span>
+
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Klik ‘OK’ pada Dialog</p></li>
+<li><p>Execute/Jalankan Node <strong>Python Script (Legacy)</strong>, Jika berhasil maka akan menghasilkan tampilan seperti gambar berikut:
+<img alt="Succes Cek Missing Value" src="../_images/succes-missing-value.png" /></p></li>
+</ul>
+</section>
+<section id="visualiasi-analisa-missing-value">
+<h3>Visualiasi Analisa Missing Value<a class="headerlink" href="#visualiasi-analisa-missing-value" title="Link to this heading">#</a></h3>
+<p>Agar lebih menarik, kita bisa gunakan Bar Chart untuk Visualisasi hasil Analisis Missing Value. Berikut langkah-langkahnya:</p>
+<ul class="simple">
+<li><p>Tambahkan Node <code class="docutils literal notranslate"><span class="pre">Bar</span> <span class="pre">Chart</span></code></p></li>
+<li><p>Hubungkan Node tersebut dengan Node <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Script</span> <span class="pre">(Legacy)</span></code> yang sudah kita buat sebelumnya. Sehingga workspace akan tampak seperti gambar berikut:
+<img alt="Workspace Visualisasi Missing Value" src="../_images/workspace-visualisasi-missing-value.png" /></p></li>
+<li><p>Klik 2x pada Node <strong>Bar Chart</strong> untuk melakukan konfigurasi</p></li>
+<li><p>Pilih <strong>Column</strong> sebagai Category Dimension dan Include <strong>MissingCount</strong> pada Frequency dimensions seperti pada gambar berikut:
+<img alt="" src="../_images/konfigurasi-bar-chart.png" /></p></li>
+<li><p>Execute/Jalankan Node <strong>Bar Chart</strong>, Jika berhasil maka akan menghasilkan tampilan seperti gambar berikut:
+<img alt="" src="../_images/visualisasi-missing-value.png" /></p></li>
+</ul>
+<p>Voila! Kita sudah berhasil memeriksa missing value menggunakan KNIME.</p>
+</section>
+</section>
+<section id="deteksi-outliers">
+<h2>Deteksi Outliers<a class="headerlink" href="#deteksi-outliers" title="Link to this heading">#</a></h2>
+<p>Untuk analisis deteksi anomali kita akan menggunakan library <code class="docutils literal notranslate"><span class="pre">pycaret</span></code> dengan model <code class="docutils literal notranslate"><span class="pre">ABOD</span></code>. Pada KNIME kita akan menggunakan Node <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code>, <code class="docutils literal notranslate"><span class="pre">Color</span> <span class="pre">Manager</span></code>, dan <code class="docutils literal notranslate"><span class="pre">Scatter</span> <span class="pre">Plot</span></code>. Berikut langkah-langkahnya:</p>
+<ul class="simple">
+<li><p>Tambahkan Node <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code></p></li>
+<li><p>Masukkan kode berikut pada Box Dialog Node:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy input to output</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">feature_numeric</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcg&quot;</span><span class="p">,</span> <span class="s2">&quot;gvh&quot;</span><span class="p">,</span> <span class="s2">&quot;lip&quot;</span><span class="p">,</span> <span class="s2">&quot;chg&quot;</span><span class="p">,</span> <span class="s2">&quot;aac&quot;</span><span class="p">,</span> <span class="s2">&quot;alm1&quot;</span><span class="p">,</span> <span class="s2">&quot;alm2&quot;</span><span class="p">]</span>
+<span class="n">feature_non_numeric</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sequence_name&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">]</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">[</span><span class="n">feature_numeric</span><span class="p">])</span>
+
+<span class="n">abod</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s2">&quot;abod&quot;</span><span class="p">)</span>
+
+<span class="n">df_abod</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">abod</span><span class="p">)</span>
+
+
+
+<span class="n">output_table_1</span> <span class="o">=</span> <span class="n">df_abod</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">feature_non_numeric</span><span class="p">],</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Kode tersebut akan digunakan untuk deteksi anomaly menggunakan <strong>ABOD</strong></p>
+<ul class="simple">
+<li><p>Jalankan Node tersebut dan pastikan indikatornya berwarnan hijau</p></li>
+<li><p>Tambahkan Node <strong>Color Manager</strong></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Color</span> <span class="pre">Manager</span></code></p></li>
+<li><p>Klik 2x pada Node <strong>Color Manager</strong> untuk melakukann konfigurasi</p></li>
+<li><p>Pilih Color By <strong>‘Anomaly’</strong> seperti pada gambar berikut:
+<img alt="" src="../_images/config-color-manager.png" /></p></li>
+<li><p>Klik ‘OK’</p></li>
+<li><p>Jalankan Node tersebut dan pastikan indikatornya berwarnan hijau</p></li>
+<li><p>Tambahkan Node <code class="docutils literal notranslate"><span class="pre">Scatter</span> <span class="pre">Plot</span></code></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">Color</span> <span class="pre">Manager</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Scatter</span> <span class="pre">Plot</span></code></p></li>
+<li><p>Klik 2x pada Node <strong>Scatter Plot</strong> untuk melakukann konfigurasi</p></li>
+<li><p>Konfigurasi Scatter plot seperti pada gambar berikut:
+<img alt="" src="../_images/config-scatter-plot.png" /></p></li>
+<li><p>Jalankan Node tersebut dan pastikan indikatornya berwarnan hijau. Jika berhasil maka akan menghasilkan visualisasi seperti gambar berikut:
+<img alt="" src="../_images/visualisasi-outliers.png" /></p></li>
+</ul>
+<p>Voila! Kita sudah berhasil melakukan deteksi outliers menggunakan KNIME. Berikut gambat workspace kita saat ini:
+<img alt="" src="../_images/workspace-outliers.png" /></p>
+</section>
+<section id="balacing-data-menggunakan-smote">
+<h2>Balacing data menggunakan SMOTE<a class="headerlink" href="#balacing-data-menggunakan-smote" title="Link to this heading">#</a></h2>
+<p>Bagian ini akan memperlihatkan perbandingan distribusi data sebelum dan sesudah Balancing menggunakan SMOTE.</p>
+<section id="visualisasi-sebelum-balancing">
+<h3>Visualisasi Sebelum Balancing<a class="headerlink" href="#visualisasi-sebelum-balancing" title="Link to this heading">#</a></h3>
+<p>Untuk membuat visualisasi distribusi data, kita memerlukan Node <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">By</span></code> dan <code class="docutils literal notranslate"><span class="pre">Bar</span> <span class="pre">Chart</span></code>. Group By akan digunakan untuk mengelompokkan data berdarkan class-nya dan Bar Chart untuk menampilkan visualisasinya.</p>
+<ul class="simple">
+<li><p>Tambahkan Node <strong>Group By</strong></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">By</span></code> dengan <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code></p></li>
+<li><p>Klik 2x pada Node <strong>Group By</strong> untuk melakukan konfigurasi</p></li>
+<li><p>Pada Tab Groups, masukkan class ke dalam Group Columns seperti pada gambar berikut:
+<img alt="" src="../_images/konfigurasi-group-by-1.png" /></p></li>
+<li><p>Pada Tab Manual Agregation, Pilih salah satu class numerik dan pilih <strong>‘Count’</strong> pada kolom aggregation seperti pada gambar berikut:
+<img alt="" src="../_images/konfigurasi-group-by-2.png" /></p></li>
+<li><p>Jalankan Node tersebut dan pastikan indikatornya berwarnan hijau</p></li>
+<li><p>Tambahkan Node <strong>Bar Chart</strong></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">By</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Bar</span> <span class="pre">Chart</span></code></p></li>
+<li><p>Klik 2x pada Node <strong>Bar Chart</strong> untuk melakukan konfigurasi</p></li>
+<li><p>Pilih <strong>class</strong> sebagai Category Dimension dan Include <strong>Count*(mcg)</strong> pada Frequency dimensions seperti pada gambar berikut:
+<img alt="" src="../_images/konfigurasi-bar-chart-2.png" /></p></li>
+<li><p>Execute/Jalankan Node <strong>Bar Chart</strong>, Jika berhasil maka akan menghasilkan tampilan seperti gambar berikut:
+<img alt="" src="../_images/visualisasi-sebelum-balancing.png" /></p></li>
+</ul>
+<p>Berikut gambar workspace kita saat ini:
+<img alt="" src="../_images/workspace-sebelum-balancing.png" /></p>
+</section>
+<section id="visualisasi-setelah-balancing">
+<h3>Visualisasi Setelah Balancing<a class="headerlink" href="#visualisasi-setelah-balancing" title="Link to this heading">#</a></h3>
+<p>Visualisasi setelah balancing sama seperti pada tahap visualisasi sebelum balancing. Hanya saja kita perlu tambahkan Node <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code> sebelum visualisasi yang akan digunakan untuk memasukkan script python balancing dengan teknik oversampling menggunakan SMOTE.</p>
+<ul class="simple">
+<li><p>Tambahkan Node <strong>Script Python (Legacy)</strong></p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">DB</span> <span class="pre">Reader</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Script</span> <span class="pre">Python</span> <span class="pre">(Legacy)</span></code></p></li>
+<li><p>Klik 2x pada Node <strong>Script Python (Legacy)</strong> untuk memasukkan script python berikut:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imblearn.over_sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">SMOTE</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">input_table_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;sequence_name&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+
+<span class="c1"># Terapkan SMOTE</span>
+<span class="c1"># n_neighbors otomatis (harus &lt; min_class_count)</span>
+<span class="n">min_class_count</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_class_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">k_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
+<span class="n">X_res_smote</span><span class="p">,</span> <span class="n">y_res_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Dataframe hasil balancing dengan SMOTE</span>
+<span class="n">df_res_smote</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_res_smote</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_res_smote</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">df_res_smote</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_res_smote</span>
+
+<span class="n">output_table_1</span> <span class="o">=</span> <span class="n">df_res_smote</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Klik ‘OK’ pada Dialog</p></li>
+<li><p>Execute/Jalankan Node <strong>Python Script (Legacy)</strong></p></li>
+<li><p>Untuk Visualisasi, Copy Node <strong>Group By</strong> dan <strong>Bar Chart</strong> yang sudah kita buat sebelum balansing</p></li>
+<li><p>Hubungkan Node <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Script</span> <span class="pre">(Legacy)</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">By</span></code> dan <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">By</span></code> dengan <code class="docutils literal notranslate"><span class="pre">Bar</span> <span class="pre">Chart</span></code></p></li>
+<li><p>Execute/Jalankan Node <strong>Group By</strong> dan <strong>Bar Chart</strong>, Jika berhasil maka akan menghasilkan tampilan seperti gambar berikut:
+<img alt="" src="../_images/visualisasi-setelah-balancing.png" /></p></li>
+</ul>
+<p>Voila! Kita sudah berhasil melakukan balancing data menggunakan teknik oversampling SMOTE pada software KNIME.</p>
+<p>Berikut gambar workspace akhir yang berhasil dibuat:
+<img alt="" src="../_images/final-workspace.png" />
+Anda bisa tambahkan komentar di tiap Node untuk menjelaskan fungsinya.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="classification.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Klasifikasi</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prasyarat">Prasyarat</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-prasyarat">Install prasyarat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-knime">Install KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-workspace-di-knime">Membuat Workspace di KNIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-dataset">Get Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#koneksi-database">Koneksi Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pilih-table-database">Pilih Table Database</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baca-data-table">Baca Data Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-missing-value">Analisis Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-python-environment">Setup Python Environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-python-extension">Install Python Extension</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi">Konfigurasi</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#script-python">Script Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualiasi-analisa-missing-value">Visualiasi Analisa Missing Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deteksi-outliers">Deteksi Outliers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#balacing-data-menggunakan-smote">Balacing data menggunakan SMOTE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sebelum-balancing">Visualisasi Sebelum Balancing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-setelah-balancing">Visualisasi Setelah Balancing</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Muhammad Junaidi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
