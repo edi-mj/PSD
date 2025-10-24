@@ -13,3 +13,4 @@ chapters:
       - file: content/data-balancing
   - file: content/classification
   - file: content/analisis-data-knime
+  - file: content/time-series-forecasting

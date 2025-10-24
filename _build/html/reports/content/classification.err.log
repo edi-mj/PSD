@@ -16,38 +16,17 @@ Traceback (most recent call last):
     return future.result()
   File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-from sklearn.naive_bayes import GaussianNB
-
-# Inisialisasi Model
-naive_bayes_model = GaussianNB()
-
-# Evaluasi pada Setiap Dataset
-accuracy_original = latih_dan_evaluasi_model(naive_bayes_model, X, y)
-accuracy_adasyn = latih_dan_evaluasi_model(naive_bayes_model, X_res_adasyn, y_res_adasyn)
-accuracy_smote = latih_dan_evaluasi_model(naive_bayes_model, X_res_smote, y_res_smote)
-
-# Tampilkan Hasil Perbandingan Akurasi
-print("--- Perbandingan Akurasi Klasifikasi Naive Bayes ---")
-print(f"Akurasi pada Data Original (Imbalanced): {accuracy_original:.4f}")
-print(f"Akurasi pada Data setelah ADASYN:       {accuracy_adasyn:.4f}")
-print(f"Akurasi pada Data setelah SMOTE:        {accuracy_smote:.4f}")
-------------------
-
-
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[3], line 7[0m
-[0;32m      4[0m naive_bayes_model [38;5;241m=[39m GaussianNB()
-[0;32m      6[0m [38;5;66;03m# Evaluasi pada Setiap Dataset[39;00m
-[1;32m----> 7[0m accuracy_original [38;5;241m=[39m latih_dan_evaluasi_model(naive_bayes_model, [43mX[49m, y)
-[0;32m      8[0m accuracy_adasyn [38;5;241m=[39m latih_dan_evaluasi_model(naive_bayes_model, X_res_adasyn, y_res_adasyn)
-[0;32m      9[0m accuracy_smote [38;5;241m=[39m latih_dan_evaluasi_model(naive_bayes_model, X_res_smote, y_res_smote)
-
-[1;31mNameError[0m: name 'X' is not defined
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+%%capture
+%run data-balancing.ipynb
+-------------------
 
