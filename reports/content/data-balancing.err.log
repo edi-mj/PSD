@@ -1,44 +1,60 @@
 Traceback (most recent call last):
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
-    asyncio.get_running_loop()
-RuntimeError: no running event loop
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1319, in execute
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 1319, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-  File "C:\laragon\bin\python\python-3.10\lib\asyncio\base_events.py", line 646, in run_until_complete
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Muhammad Junaidi\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
     return future.result()
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 709, in async_execute
+           ^^^^^^^^^^^^^^^
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\laragon\bin\python\python-3.10\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pymysql
-from dotenv import load_dotenv
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from imblearn.over_sampling import ADASYN
+load_dotenv()
+
+host = os.getenv("DB_HOST")
+port = os.getenv("DB_PORT")
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASS")
+db = os.getenv("DB_NAME")
+
+conn = pymysql.connect(
+  host = host,
+  port = int(port),
+  user = user,
+  password = password,
+  database = db,
+)
+
+query = "SELECT * FROM ecoli.data_ecoli"
+
+df = pd.read_sql(query, conn)
+conn.close()
 ------------------
 
 
-[1;31m----------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m            Traceback (most recent call last)
-Cell [1;32mIn[2], line 2[0m
-[0;32m      1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpymysql[39;00m
-[1;32m----> 2[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mdotenv[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m load_dotenv
-[0;32m      3[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mos[39;00m
-[0;32m      4[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[3][39m[32m, line 11[39m
+[32m      6[39m password = os.getenv([33m"[39m[33mDB_PASS[39m[33m"[39m)
+[32m      7[39m db = os.getenv([33m"[39m[33mDB_NAME[39m[33m"[39m)
+[32m      9[39m conn = pymysql.connect(
+[32m     10[39m   host = host,
+[32m---> [39m[32m11[39m   port = [38;5;28;43mint[39;49m[43m([49m[43mport[49m[43m)[49m,
+[32m     12[39m   user = user,
+[32m     13[39m   password = password,
+[32m     14[39m   database = db,
+[32m     15[39m )
+[32m     17[39m query = [33m"[39m[33mSELECT * FROM ecoli.data_ecoli[39m[33m"[39m
+[32m     19[39m df = pd.read_sql(query, conn)
 
-[1;31mModuleNotFoundError[0m: No module named 'dotenv'
+[31mTypeError[39m: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
 
