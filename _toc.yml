@@ -14,3 +14,4 @@ chapters:
   - file: content/classification
   - file: content/analisis-data-knime
   - file: content/time-series-forecasting
+  - file: content/dtw
