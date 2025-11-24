@@ -1,17 +1,4 @@
 Traceback (most recent call last):
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 782, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 214, in ensure_async
-    result = await obj
-             ^^^^^^^^^
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\jupyter_client\channels.py", line 313, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
   File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 1319, in execute
@@ -25,19 +12,38 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
   File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 1005, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
-    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-%%capture
-%run data-balancing.ipynb
--------------------
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "D:\Penyimpanan Utama\Documents\01_Kuliah\Semester_5\Proyek_Sains_Data\Jupyter_Book\jb-psd\.venv\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from sklearn.naive_bayes import GaussianNB
+
+# Inisialisasi Model
+naive_bayes_model = GaussianNB()
+
+# Evaluasi pada Setiap Dataset
+accuracy_original = latih_dan_evaluasi_model(naive_bayes_model, X, y)
+accuracy_adasyn = latih_dan_evaluasi_model(naive_bayes_model, X_res_adasyn, y_res_adasyn)
+accuracy_smote = latih_dan_evaluasi_model(naive_bayes_model, X_res_smote, y_res_smote)
+
+# Tampilkan Hasil Perbandingan Akurasi
+print("--- Perbandingan Akurasi Klasifikasi Naive Bayes ---")
+print(f"Akurasi pada Data Original (Imbalanced): {accuracy_original:.4f}")
+print(f"Akurasi pada Data setelah ADASYN:       {accuracy_adasyn:.4f}")
+print(f"Akurasi pada Data setelah SMOTE:        {accuracy_smote:.4f}")
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mNameError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[3][39m[32m, line 7[39m
+[32m      4[39m naive_bayes_model = GaussianNB()
+[32m      6[39m [38;5;66;03m# Evaluasi pada Setiap Dataset[39;00m
+[32m----> [39m[32m7[39m accuracy_original = latih_dan_evaluasi_model(naive_bayes_model, [43mX[49m, y)
+[32m      8[39m accuracy_adasyn = latih_dan_evaluasi_model(naive_bayes_model, X_res_adasyn, y_res_adasyn)
+[32m      9[39m accuracy_smote = latih_dan_evaluasi_model(naive_bayes_model, X_res_smote, y_res_smote)
+
+[31mNameError[39m: name 'X' is not defined
 
