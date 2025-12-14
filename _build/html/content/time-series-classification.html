@@ -1,0 +1,1251 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasifikasi Time Series &#8212; Proyek Data Sains</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/time-series-classification';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="DTW Distance Calculation on Raw Audio Data" href="dtw.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pp.png" class="logo__image only-light" alt="Proyek Data Sains - Home"/>
+    <script>document.write(`<img src="../_static/pp.png" class="logo__image only-dark" alt="Proyek Data Sains - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Intro
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data-understanding.html">Data Understanding</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pre-processing.html">Pre-Processing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-balancing.html">Balancing Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Klasifikasi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analisis-data-knime.html">Analisis &amp; Balancing Data menggunakan KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time-series-forecasting.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtw.html">DTW Distance Calculation on Raw Audio Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Klasifikasi Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/edi-mj/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/edi-mj/PSD/issues/new?title=Issue%20on%20page%20%2Fcontent/time-series-classification.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/time-series-classification.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Klasifikasi Time Series</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identifikasi-weekend-vs-weekday-di-chinatown-melbourne">Identifikasi Weekend vs Weekday di Chinatown Melbourne</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1 Business Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-bisnis">1.1 Konteks Bisnis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-proyek">1.2 Tujuan Proyek</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kriteria-keberhasilan-proyek">1.3 Kriteria Keberhasilan Proyek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2 Data Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">3 Data Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">4 Modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">5 Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6 Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model">Save Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-deploy">Link Deploy</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-time-series">
+<h1>Klasifikasi Time Series<a class="headerlink" href="#klasifikasi-time-series" title="Link to this heading">#</a></h1>
+<section id="identifikasi-weekend-vs-weekday-di-chinatown-melbourne">
+<h2>Identifikasi Weekend vs Weekday di Chinatown Melbourne<a class="headerlink" href="#identifikasi-weekend-vs-weekday-di-chinatown-melbourne" title="Link to this heading">#</a></h2>
+</section>
+<section id="business-understanding">
+<h2>1 Business Understanding<a class="headerlink" href="#business-understanding" title="Link to this heading">#</a></h2>
+<p>Tujuan utama dari proyek ini adalah mengklasifikasikan pola volume pejalan kaki yang diamati di kawasan Chinatown-Swanston Street (Utara), Melbourne berdasarkan pola temporal harian. Klasifikasi ini akan menentukan apakah pola time series tertentu merepresentasikan data yang dikumpulkan pada hari kerja (Senin-Jumat) atau pada akhir pekan (Sabtu-Minggu).</p>
+<section id="konteks-bisnis">
+<h3>1.1 Konteks Bisnis<a class="headerlink" href="#konteks-bisnis" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Jumlah pengunjung sangat berbeda antara hari kerja dan akhir pekan, sehingga pola ini penting untuk dipahami.</p></li>
+<li><p>Dengan data pola pengunjung, kita dapat menebak karakteristik hari tertentu meskipun tidak ada informasi tanggal secara langsung.</p></li>
+</ul>
+</section>
+<section id="tujuan-proyek">
+<h3>1.2 Tujuan Proyek<a class="headerlink" href="#tujuan-proyek" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Membuat model yang dapat membedakan apakah suatu pola pengunjung berasal dari hari kerja atau akhir pekan dengan hasil yang akurat dan stabil.</p></li>
+<li><p>Memahami apa saja perbedaan pola pengunjung antara hari kerja dan akhir pekan.</p></li>
+</ul>
+</section>
+<section id="kriteria-keberhasilan-proyek">
+<h3>1.3 Kriteria Keberhasilan Proyek<a class="headerlink" href="#kriteria-keberhasilan-proyek" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Model dapat memberikan prediksi yang akurat (akurasi minimal 85%).</p></li>
+<li><p>Model mampu memprediksi dengan tepat untuk kedua jenis hari (hari kerja dan akhir pekan), tidak bias terhadap satu kelas.</p></li>
+<li><p>Insights tentang apa perbedaan pola pengunjung hari kerja dan akhir pekan.</p></li>
+</ul>
+</section>
+</section>
+<section id="data-understanding">
+<h2>2 Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan adalah “Chinatown Dataset” yang dapat diakses melalui link berikut: <a class="reference external" href="https://www.timeseriesclassification.com/description.php?Dataset=Chinatown">https://www.timeseriesclassification.com/description.php?Dataset=Chinatown</a>.</p>
+<p>2.1 Deskripsi Data</p>
+<ul class="simple">
+<li><p>Sumber: Dataset tersebut dihasilkan dari sistem penghitung pejalan kaki otomatis di kota Melbourne. Sistem tersebut dapat diakses melalui link berikut: <a class="reference external" href="https://www.pedestrian.melbourne.vic.gov.au/">https://www.pedestrian.melbourne.vic.gov.au/</a>. Data yang diambil merupakan volume pejalan kaki harian per jam yang diambil selama setahun penuh di tahun 2017.</p></li>
+<li><p>Tipe Data: Dataset ini merupakan data time series bertipe univariat atau hanya memiliki satu variabel yaitu jumlah pejalan kaki.</p></li>
+<li><p>Jumlah Sampel: Dataset ini terdiri dari total 363 sampel yang terbagi menjadi 2 kelas, dimana:</p>
+<ul>
+<li><p>Kelas 1 (Akhir Pekan) berisi 259 sampel.</p></li>
+<li><p>Kelas 2 (Hari Kerja) berisi 104 sampel.</p></li>
+</ul>
+</li>
+<li><p>Fitur: Dataset ini terdiri dari 24 fitur yang merepresentasikan setiap jam dalam satu hari.</p></li>
+</ul>
+<p>2.2 Eksplorasi Data Awal</p>
+<ul class="simple">
+<li><p>Tidak ada nilai yang hilang (missing values) dan data yang duplikat dalam dataset.</p></li>
+<li><p>Distribusi kelas menunjukkan data yang tidak imbang secara alami, yaitu jumlah hari kerja dalam seminggu adalah 5 hari sedangkan jumlah akhir pekan dalam seminggu adalah 2 hari.</p></li>
+<li><p>Visualisasi boxplot menunjukkan tidak adanya noise pada dataset seperti volume negatif atau terlampau tinggi akibat kesalahan sensor/sistem.</p></li>
+<li><p>Pola visual menunjukkan fluktuasi harian yang berbeda antara hari kerja (puncak pada jam sibuk kantor) dan akhir pekan (puncak lebih landai di siang hari dan malam hari).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">aeon.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_classification</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="n">cross_val_score</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">aeon.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_classification</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;aeon&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_3d</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">meta_data</span> <span class="o">=</span> <span class="n">load_classification</span><span class="p">(</span><span class="s2">&quot;Chinatown&quot;</span><span class="p">,</span> <span class="n">return_metadata</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of X: </span><span class="si">{</span><span class="n">X_3d</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of y: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Meta data: </span><span class="si">{</span><span class="n">meta_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Informasi class: &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">meta_data</span><span class="p">[</span><span class="s1">&#39;class_values&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">: Weekend (Sabtu-Minggu)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">meta_data</span><span class="p">[</span><span class="s1">&#39;class_values&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">: Weekday (Senin-Jum&#39;at)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of X: (363, 1, 24)
+Shape of y: (363,)
+Meta data: {&#39;problemname&#39;: &#39;chinatown&#39;, &#39;timestamps&#39;: False, &#39;missing&#39;: False, &#39;univariate&#39;: True, &#39;equallength&#39;: True, &#39;classlabel&#39;: True, &#39;targetlabel&#39;: False, &#39;class_values&#39;: [&#39;1&#39;, &#39;2&#39;]}
+
+Informasi class: 
+1: Weekend (Sabtu-Minggu)
+2: Weekday (Senin-Jum&#39;at)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_3d</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data types: </span><span class="se">\n</span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+      <th>18</th>
+      <th>19</th>
+      <th>20</th>
+      <th>21</th>
+      <th>22</th>
+      <th>23</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>573.0</td>
+      <td>375.0</td>
+      <td>301.0</td>
+      <td>212.0</td>
+      <td>55.0</td>
+      <td>34.0</td>
+      <td>25.0</td>
+      <td>33.0</td>
+      <td>113.0</td>
+      <td>143.0</td>
+      <td>...</td>
+      <td>1081.0</td>
+      <td>866.0</td>
+      <td>1096.0</td>
+      <td>1039.0</td>
+      <td>975.0</td>
+      <td>746.0</td>
+      <td>581.0</td>
+      <td>409.0</td>
+      <td>182.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>394.0</td>
+      <td>264.0</td>
+      <td>140.0</td>
+      <td>144.0</td>
+      <td>104.0</td>
+      <td>28.0</td>
+      <td>28.0</td>
+      <td>25.0</td>
+      <td>70.0</td>
+      <td>153.0</td>
+      <td>...</td>
+      <td>1240.0</td>
+      <td>1109.0</td>
+      <td>1137.0</td>
+      <td>1290.0</td>
+      <td>1137.0</td>
+      <td>791.0</td>
+      <td>638.0</td>
+      <td>597.0</td>
+      <td>316.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>603.0</td>
+      <td>348.0</td>
+      <td>176.0</td>
+      <td>177.0</td>
+      <td>47.0</td>
+      <td>30.0</td>
+      <td>40.0</td>
+      <td>42.0</td>
+      <td>101.0</td>
+      <td>180.0</td>
+      <td>...</td>
+      <td>1243.0</td>
+      <td>1141.0</td>
+      <td>1178.0</td>
+      <td>1256.0</td>
+      <td>1114.0</td>
+      <td>814.0</td>
+      <td>635.0</td>
+      <td>304.0</td>
+      <td>168.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>428.0</td>
+      <td>309.0</td>
+      <td>199.0</td>
+      <td>117.0</td>
+      <td>82.0</td>
+      <td>43.0</td>
+      <td>24.0</td>
+      <td>64.0</td>
+      <td>152.0</td>
+      <td>183.0</td>
+      <td>...</td>
+      <td>1460.0</td>
+      <td>1365.0</td>
+      <td>1520.0</td>
+      <td>1700.0</td>
+      <td>1797.0</td>
+      <td>1596.0</td>
+      <td>1139.0</td>
+      <td>910.0</td>
+      <td>640.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>372.0</td>
+      <td>310.0</td>
+      <td>203.0</td>
+      <td>133.0</td>
+      <td>65.0</td>
+      <td>39.0</td>
+      <td>27.0</td>
+      <td>36.0</td>
+      <td>107.0</td>
+      <td>139.0</td>
+      <td>...</td>
+      <td>971.0</td>
+      <td>1104.0</td>
+      <td>844.0</td>
+      <td>1023.0</td>
+      <td>1019.0</td>
+      <td>862.0</td>
+      <td>643.0</td>
+      <td>591.0</td>
+      <td>452.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 25 columns</p>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data shape: (363, 25)
+Data types: 
+0         float64
+1         float64
+2         float64
+3         float64
+4         float64
+5         float64
+6         float64
+7         float64
+8         float64
+9         float64
+10        float64
+11        float64
+12        float64
+13        float64
+14        float64
+15        float64
+16        float64
+17        float64
+18        float64
+19        float64
+20        float64
+21        float64
+22        float64
+23        float64
+target     object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cek missing values</span>
+<span class="n">count_missing_values</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah missing values: </span><span class="si">{</span><span class="n">count_missing_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># cek data duplikat</span>
+<span class="n">count_duplikat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah data duplikat: </span><span class="si">{</span><span class="n">count_duplikat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah missing values: 0
+Jumlah data duplikat: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="bp">cls</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi kelas: </span><span class="se">\n</span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class 1 (Weekend): </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class 2 (Weekday): </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribusi Class&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Class&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Jumlah Sampel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi kelas: 
+target
+2    259
+1    104
+Name: count, dtype: int64
+Class 1 (Weekend): 28.65%
+Class 2 (Weekday): 71.35%
+</pre></div>
+</div>
+<img alt="../_images/eb6c8a80cad270bf6da891930fba0e8d5d29955fe37c649853f974a73d4bc81e.png" src="../_images/eb6c8a80cad270bf6da891930fba0e8d5d29955fe37c649853f974a73d4bc81e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X_3d</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Deteksi Noise: Sebaran Volume Pejalan Kaki per Jam&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Jam (Time Steps)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Volume Pejalan Kaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/58613c0f942a975e4fede8f7e9be1948673d35d9128e2907512d955cc020e3a3.png" src="../_images/58613c0f942a975e4fede8f7e9be1948673d35d9128e2907512d955cc020e3a3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weekend</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+<span class="n">weekday</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+
+<span class="n">mean_weekend</span> <span class="o">=</span> <span class="n">weekend</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_weekday</span> <span class="o">=</span> <span class="n">weekday</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># plt.plot(weekend.T, &#39;.&#39;, color=&#39;blue&#39;)</span>
+<span class="c1"># plt.plot(weekday.T, &#39;.&#39;, color=&#39;orange&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_weekend</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1: Weekend&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_weekday</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;2: Weekday&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rata-Rata Pola Pejalan Kaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Jam (Time Steps)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Volume Pejalan Kaki&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e68df2e2d428a1073daa43da95165c73a8f729eaf9f39859513037d0f387f2f0.png" src="../_images/e68df2e2d428a1073daa43da95165c73a8f729eaf9f39859513037d0f387f2f0.png" />
+</div>
+</div>
+</section>
+<section id="data-preparation">
+<h2>3 Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading">#</a></h2>
+<p>Berdasarkan proses sebelumnya yaitu Data Understanding, tidak ada missing value &amp; duplikat data. Distribusi kelas juga masih menunjukkan distribusi data yang normal yaitu sekitar 7:3 untuk dua kelas. Di mana distribusi data tersebut memang dihasilkan secara alami. Pengecekan data noise juga mendapatkan hasil baik yaitu tidak adanya noise data.</p>
+<p>Berdasarkan hasil tersebut, tahapan data preparation ini hanya akan berfokus pada pemembagian data menjadi dua bagian, yaitu data training untuk melatih model dan data testing untuk mengevaluasi model. Spliting data menggunakan argumen stratify untuk memastikan proposi kelas (distribusi data) tetap sama antara data asli, data train, dan data test.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi kelas data train: </span><span class="se">\n</span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi kelas data test: </span><span class="se">\n</span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Class weekend untuk data train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class weekday untuk data train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribusi kelas data train: 
+target
+2    207
+1     83
+Name: count, dtype: int64
+
+Distribusi kelas data test: 
+target
+2    52
+1    21
+Name: count, dtype: int64
+
+Class weekend untuk data train: 28.62%
+Class weekday untuk data train: 71.38%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="modeling">
+<h2>4 Modeling<a class="headerlink" href="#modeling" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini, modeling menerapkan dua pendekatan berbeda: algoritma berbasis ensemble (Random Forest) dan algoritma berbasis transformation (ROCKET), untuk mengklasifikasikan pola aktivitas pejalan kaki.</p>
+<p>4.1 Pemilihan Teknik Pemodelan (Select Modeling Techniques)</p>
+<ol class="arabic simple">
+<li><p>Model 1: Random Forest Classifier (Feature-Based Approach)</p>
+<ul class="simple">
+<li><p>Deskripsi: Saya menggunakan Random Forest, sebuah metode ensemble yang terdiri dari banyak pohon keputusan (Decision Trees).</p></li>
+<li><p>Logika: Setiap jam (dari 24 titik waktu) diperlakukan sebagai fitur input. Model akan mempelajari interaksi non-linear antar jam tertentu (misalnya: “Jika jam 08.00 tinggi DAN jam 14.00 rendah, maka Weekday”).</p></li>
+<li><p>Keunggulan: Memberikan interpretability melalui Feature Importance, sehingga kita bisa mengetahui jam berapa yang paling krusial membedakan Hari Kerja vs Akhir Pekan.</p></li>
+</ul>
+</li>
+<li><p>Model 2: ROCKET (RandOm Convolutional KErnel Transform)</p>
+<ul class="simple">
+<li><p>Deskripsi: ROCKET adalah metode modern dalam klasifikasi time series yang menggunakan ribuan kernel konvolusi acak untuk mengubah data mentah menjadi kumpulan fitur baru yang merepresentasikan bentuk (shape) dan pola lokal.</p></li>
+<li><p>Logika: ROCKET tidak melakukan klasifikasi langsung. Ia bertindak sebagai transformer fitur yang output-nya kemudian diklasifikasikan menggunakan model linear (biasanya Ridge Classifier atau Logistic Regression).</p></li>
+<li><p>Keunggulan: Sangat cepat dan sering kali mencapai akurasi setara Deep Learning tanpa butuh GPU mahal atau data dalam jumlah masif.
+4.2 Desain Pengujian</p></li>
+<li><p>Validasi: Menggunakan Stratified K-Fold Cross-Validation (k=10). Teknik ini menjamin proporsi kelas Weekend tetap ada di setiap iterasi pengujian.</p></li>
+<li><p>Metric Utama: Saya fokus pada F1-Score (untuk kelas Weekend) dan Balanced Accuracy, bukan sekadar Akurasi total, untuk menghindari bias model yang hanya menebak kelas mayoritas (Weekday).</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix&quot;</span><span class="p">):</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted Label&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Label&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;Model&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;==&gt; Evaluasi </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> &lt;==&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi </span><span class="se">\t</span><span class="s2">: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision </span><span class="se">\t</span><span class="s2">: </span><span class="si">{</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall </span><span class="se">\t\t</span><span class="s2">: </span><span class="si">{</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1-score </span><span class="se">\t</span><span class="s2">: </span><span class="si">{</span><span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification Report:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf_clf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">rf_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_rf</span> <span class="o">=</span> <span class="n">rf_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_rf</span><span class="p">,</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">)</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_rf</span><span class="p">,</span> <span class="n">rf_clf</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="s2">&quot;Random Forest Confusion Matrix&quot;</span><span class="p">)</span>
+
+<span class="n">cross_validation</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">rf_clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cross_validation</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Cross Validasion &lt;==&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rata-rata Akurasi: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sebaran Skor: </span><span class="si">{</span><span class="n">scores</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Evaluasi Random Forest &lt;==
+Akurasi 	: 0.9726
+Precision 	: 0.9736
+Recall 		: 0.9726
+F1-score 	: 0.9722
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           1       1.00      0.90      0.95        21
+           2       0.96      1.00      0.98        52
+
+    accuracy                           0.97        73
+   macro avg       0.98      0.95      0.97        73
+weighted avg       0.97      0.97      0.97        73
+</pre></div>
+</div>
+<img alt="../_images/ff9ab5ddd19d4a1fe8d0c665c231eadc05076752d43d418d4cd96396aa76494b.png" src="../_images/ff9ab5ddd19d4a1fe8d0c665c231eadc05076752d43d418d4cd96396aa76494b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Cross Validasion &lt;==
+Rata-rata Akurasi: 0.9897
+Sebaran Skor: [1.         1.         1.         1.         1.         0.93103448
+ 1.         1.         1.         0.96551724]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">RidgeClassifierCV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sktime.transformations.panel.rocket</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rocket</span>
+
+<span class="n">X_train2</span><span class="p">,</span> <span class="n">X_test2</span><span class="p">,</span> <span class="n">y_train2</span><span class="p">,</span> <span class="n">y_test2</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_3d</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+
+<span class="n">rocket_pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">Rocket</span><span class="p">(</span><span class="n">num_kernels</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">RidgeClassifierCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="n">rocket_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train2</span><span class="p">,</span> <span class="n">y_train2</span><span class="p">)</span>
+<span class="n">y_pred_rocket</span> <span class="o">=</span> <span class="n">rocket_pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test2</span><span class="p">)</span>
+
+<span class="n">evaluate_model</span><span class="p">(</span><span class="n">y_test2</span><span class="p">,</span> <span class="n">y_pred_rocket</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;ROCKET with RidgeClassifierCV&quot;</span><span class="p">)</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_test2</span><span class="p">,</span> <span class="n">y_pred_rocket</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">meta_data</span><span class="p">[</span><span class="s1">&#39;class_values&#39;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix - ROCKET with RidgeClassifierCV&quot;</span><span class="p">)</span>
+
+<span class="n">cross_validation</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">rocket_pipeline</span><span class="p">,</span> <span class="n">X_train2</span><span class="p">,</span> <span class="n">y_train2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cross_validation</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Cross Validasion &lt;==&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rata-rata Akurasi: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sebaran Skor: </span><span class="si">{</span><span class="n">scores</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Evaluasi ROCKET with RidgeClassifierCV &lt;==
+Akurasi 	: 1.0000
+Precision 	: 1.0000
+Recall 		: 1.0000
+F1-score 	: 1.0000
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           1       1.00      1.00      1.00        21
+           2       1.00      1.00      1.00        52
+
+    accuracy                           1.00        73
+   macro avg       1.00      1.00      1.00        73
+weighted avg       1.00      1.00      1.00        73
+</pre></div>
+</div>
+<img alt="../_images/f54ba44bc645b1208c3a30b985cb301c4b8f8e904276f95f1b594a488757938c.png" src="../_images/f54ba44bc645b1208c3a30b985cb301c4b8f8e904276f95f1b594a488757938c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Cross Validasion &lt;==
+Rata-rata Akurasi: 0.9793
+Sebaran Skor: [1.         1.         1.         1.         0.96551724 0.93103448
+ 1.         1.         0.93103448 0.96551724]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluation">
+<h2>5 Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
+<p>5.1 Tujuan Evaluasi</p>
+<p>Tahap evaluasi bertujuan untuk menilai kinerja model dalam mengklasifikasikan pola volume pejalan kaki menjadi hari kerja (weekday) dan akhir pekan (weekend). Evaluasi dilakukan untuk memastikan bahwa model tidak hanya memiliki akurasi tinggi, tetapi juga stabil, seimbang antar kelas, serta mampu menangkap pola temporal yang relevan pada data time series.</p>
+<p>5.2 Metode Evaluasi</p>
+<p>Evaluasi model dilakukan menggunakan beberapa metrik utama, yaitu:</p>
+<ul class="simple">
+<li><p>Accuracy, untuk mengukur tingkat ketepatan prediksi secara keseluruhan.</p></li>
+<li><p>Precision, Recall, dan F1-score, untuk memastikan model tidak bias terhadap salah satu kelas.</p></li>
+<li><p>Confusion Matrix, untuk melihat distribusi prediksi benar dan salah pada masing-masing kelas.</p></li>
+<li><p>Cross Validation (Stratified K-Fold), untuk menilai kestabilan performa model pada berbagai subset data.</p></li>
+</ul>
+<p>Pendekatan stratified digunakan agar proporsi data weekday dan weekend tetap seimbang pada setiap lipatan validasi.</p>
+<p>5.3 Evaluasi Model Random Forest</p>
+<p>Model Random Forest digunakan sebagai pendekatan awal karena kemampuannya menangani data non-linear dan robust terhadap noise.
+Hasil evaluasi menunjukkan bahwa:</p>
+<ul class="simple">
+<li><p>Model mampu mencapai akurasi tinggi, melampaui kriteria keberhasilan proyek.</p></li>
+<li><p>Confusion matrix memperlihatkan bahwa kesalahan klasifikasi relatif kecil dan tidak terpusat pada satu kelas tertentu.</p></li>
+<li><p>Hasil cross validation menunjukkan rata-rata akurasi yang konsisten, dengan sebaran skor yang sempit, menandakan model cukup stabil.</p></li>
+</ul>
+<p>Selain itu, analisis feature importance pada Random Forest menunjukkan bahwa jam-jam tertentu memiliki kontribusi paling besar dalam membedakan pola weekday dan weekend. Hal ini selaras dengan konteks bisnis, di mana aktivitas pejalan kaki pada jam tertentu cenderung berbeda antara hari kerja dan akhir pekan.</p>
+<p>5.4 Evaluasi Model Time Series dengan ROCKET</p>
+<p>Untuk menangkap karakteristik temporal secara lebih mendalam, digunakan pendekatan ROCKET (Random Convolutional Kernel Transform) yang dikombinasikan dengan Ridge Classifier.
+Model ini dirancang khusus untuk klasifikasi time series dan terbukti memberikan performa yang sangat baik.</p>
+<p>Hasil evaluasi menunjukkan bahwa:</p>
+<ul class="simple">
+<li><p>Model ROCKET menghasilkan akurasi yang lebih tinggi dibandingkan model konvensional.</p></li>
+<li><p>Confusion matrix memperlihatkan prediksi yang lebih seimbang antara kelas weekday dan weekend.</p></li>
+<li><p>Cross validation menunjukkan stabilitas performa yang sangat baik, dengan variasi skor yang rendah.</p></li>
+</ul>
+<p>Keunggulan ROCKET terletak pada kemampuannya mengekstraksi pola lokal dan global dari data time series tanpa memerlukan rekayasa fitur manual, sehingga lebih efektif dalam mengenali pola kunjungan pejalan kaki.</p>
+<p>5.5 Kesimpulan Evaluasi</p>
+<p>Berdasarkan hasil evaluasi, dapat disimpulkan bahwa:</p>
+<ul class="simple">
+<li><p>Model yang dibangun telah memenuhi kriteria keberhasilan proyek.</p></li>
+<li><p>Pendekatan time series classification terbukti lebih efektif untuk permasalahan ini.</p></li>
+<li><p>Model mampu mengklasifikasikan pola hari kerja dan akhir pekan secara akurat, stabil, dan seimbang.</p></li>
+<li><p>Hasil evaluasi mendukung bahwa pola volume pejalan kaki memiliki karakteristik temporal yang kuat dan dapat dimanfaatkan untuk pengambilan keputusan.</p></li>
+<li><p>Model yang dihasilkan layak untuk digunakan pada tahap implementasi atau pengembangan lebih lanjut.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Jam_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">)]</span>
+
+<span class="n">importances</span> <span class="o">=</span> <span class="n">rf_clf</span><span class="o">.</span><span class="n">feature_importances_</span>
+
+<span class="n">df_imp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Jam&#39;</span><span class="p">:</span> <span class="n">feature_names</span><span class="p">,</span> <span class="s1">&#39;Importance&#39;</span><span class="p">:</span> <span class="n">importances</span><span class="p">})</span>
+<span class="n">df_imp</span> <span class="o">=</span> <span class="n">df_imp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Importance&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Jam&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Jam&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_imp</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Fitur Paling Berpengaruh: Jam Berapa yang Membedakan Weekday vs Weekend?&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Tingkat Kepentingan (Gini Importance)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5138fa514ca73b4ee66e1ea06b16c6dc783a3a4c7a424dc11dd2dab9ae750b4e.png" src="../_images/5138fa514ca73b4ee66e1ea06b16c6dc783a3a4c7a424dc11dd2dab9ae750b4e.png" />
+</div>
+</div>
+</section>
+<section id="deployment">
+<h2>6 Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h2>
+<p>6.1 Tujuan Deployment</p>
+<p>Tahap deployment bertujuan untuk mengimplementasikan model klasifikasi yang telah dievaluasi ke dalam sebuah aplikasi yang dapat digunakan oleh pengguna. Model diterapkan dalam bentuk aplikasi berbasis web agar proses prediksi dapat dilakukan secara interaktif dan mudah diakses.</p>
+<p>6.2 Arsitektur Deployment</p>
+<p>Model dideploy menggunakan Streamlit sebagai antarmuka pengguna. Aplikasi ini memungkinkan pengguna memasukkan data volume pejalan kaki tiap jam dalam satu hari sebagai input. Data tersebut kemudian diproses dan diteruskan ke model yang telah dilatih untuk menghasilkan prediksi kategori hari, yaitu weekday atau weekend.</p>
+<p>Secara umum, alur kerja sistem adalah sebagai berikut:</p>
+<ol class="arabic simple">
+<li><p>Pengguna menginput volume pejalan kaki untuk setiap jam dalam satu hari.</p></li>
+<li><p>Sistem melakukan validasi dan praproses data agar sesuai dengan format input model.</p></li>
+<li><p>Model melakukan prediksi berdasarkan data time series yang diberikan.</p></li>
+<li><p>Hasil prediksi ditampilkan langsung pada antarmuka aplikasi.</p></li>
+</ol>
+<p>6.3 Implementasi Aplikasi</p>
+<p>Model yang telah dilatih disimpan dalam bentuk file dan dimuat kembali pada aplikasi Streamlit. Proses inferensi dilakukan secara real-time tanpa perlu pelatihan ulang model.
+Streamlit dipilih karena kemudahan integrasi dengan model machine learning serta kemampuannya menyajikan antarmuka yang sederhana dan interaktif.</p>
+<p>6.4 Kesimpulan Deployment</p>
+<p>Dengan implementasi berbasis Streamlit, sistem klasifikasi pola volume pejalan kaki dapat digunakan secara praktis oleh pengguna non-teknis. Deployment ini memungkinkan pemanfaatan model secara langsung untuk mendukung analisis dan pengambilan keputusan berdasarkan pola aktivitas harian.</p>
+<section id="save-model">
+<h3>Save Model<a class="headerlink" href="#save-model" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">rf_clf</span><span class="p">,</span> <span class="s1">&#39;deploy/models/random_forest_model.pkl&#39;</span><span class="p">)</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">rocket_pipeline</span><span class="p">,</span> <span class="s1">&#39;deploy/models/rocket_model.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;deploy/models/rocket_model.pkl&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="link-deploy">
+<h3>Link Deploy<a class="headerlink" href="#link-deploy" title="Link to this heading">#</a></h3>
+<p>Kunjungi aplikasi melalui tautan berikut: <a class="reference external" href="https://time-series-classification.streamlit.app/">https://time-series-classification.streamlit.app/</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="dtw.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DTW Distance Calculation on Raw Audio Data</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identifikasi-weekend-vs-weekday-di-chinatown-melbourne">Identifikasi Weekend vs Weekday di Chinatown Melbourne</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#business-understanding">1 Business Understanding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konteks-bisnis">1.1 Konteks Bisnis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan-proyek">1.2 Tujuan Proyek</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kriteria-keberhasilan-proyek">1.3 Kriteria Keberhasilan Proyek</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding">2 Data Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">3 Data Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">4 Modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">5 Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6 Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model">Save Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#link-deploy">Link Deploy</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Muhammad Junaidi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
